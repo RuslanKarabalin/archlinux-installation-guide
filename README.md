@@ -206,7 +206,7 @@ vim /etc/pacman.conf
 >
 > ```plaintext
 > [multilib]
-> ...
+> Include = ...
 > ```
 
 ```bash
@@ -322,7 +322,7 @@ vim /etc/pacman.d/hooks/nvidia.hook
 systemctl reboot
 ```
 
-### hyprland
+### Hyprland
 
 ```bash
 pacman -S hyprland hyprlock waybar wofi mako \
@@ -338,7 +338,7 @@ pacman -S hyprland hyprlock waybar wofi mako \
 systemctl enable sddm
 ```
 
-### gnome
+### GNOME
 
 ```bash
 pacman -S gnome-shell nautilus evince file-roller gnome-keyring \
