@@ -66,10 +66,14 @@ nano /mnt/etc/vconsole.conf
 ### Install packages
 
 ```bash
-pacstrap -K /mnt base base-devel \
-    linux linux-headers linux-firmware \
-    amd-ucode grub efibootmgr \
-    zram-generator networkmanager \
+pacstrap -K /mnt base \
+    base-devel linux \
+    linux-headers \
+    linux-firmware \
+    amd-ucode \
+    grub efibootmgr \
+    zram-generator \
+    networkmanager \
     sudo neovim zsh
 ```
 
@@ -88,7 +92,7 @@ pacstrap -K /mnt base base-devel \
 ### Timezone setup
 
 ```bash
-ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
+ln -sf /usr/share/zoneinfo/<REGION>/<CITY> /etc/localtime
 hwclock --systohc
 ```
 
@@ -102,6 +106,7 @@ nvim /etc/locale.gen
 >
 > ```plaintext
 > en_US.UTF-8 UTF-8
+> ...
 > ru_RU.UTF-8 UTF-8
 > ```
 
@@ -194,6 +199,7 @@ EDITOR=nvim visudo
 >
 > ```plaintext
 > %wheel ALL=...
+> ...
 > %sudo ALL=...
 > ```
 
@@ -221,14 +227,21 @@ pacman -Syu
 
 ```bash
 pacman -S bluez bluez-utils \
-    gvfs gvfs-mtp gvfs-gphoto2 \
-    pipewire wireplumber pipewire-audio \
-    pipewire-alsa pipewire-pulse pipewire-jack \
-    nvidia-dkms nvidia-utils nvidia-prime nvidia-settings \
-    ttf-jetbrains-mono noto-fonts noto-fonts-cjk \
-    noto-fonts-emoji noto-fonts-extra otf-font-awesome \
-    alacritty git eza bat tmux htop tree unzip unrar ripgrep openssh \
-    systemd-resolvconf wireguard-tools
+    gvfs gvfs-mtp \
+    gvfs-gphoto2 \
+    pipewire wireplumber \
+    pipewire-audio pipewire-alsa \
+    pipewire-pulse pipewire-jack \
+    nvidia-dkms nvidia-utils \
+    nvidia-prime nvidia-settings \
+    ttf-jetbrains-mono noto-fonts \
+    noto-fonts-cjk noto-fonts-emoji \
+    noto-fonts-extra otf-font-awesome \
+    alacritty tmux git eza \
+    bat htop tree ripgrep \
+    unzip unrar openssh \
+    systemd-resolvconf \
+    wireguard-tools
 ```
 
 ### Enable zram
@@ -239,7 +252,7 @@ nvim /etc/systemd/zram-generator.conf
 
 > write
 >
-> litteraly "ram / 2", not 8G
+> literally "ram / 2", not 8G
 >
 > ```plaintext
 > [zram0]
@@ -339,11 +352,15 @@ makepkg -si
 #### Hyprland
 
 ```bash
-pacman -S hyprland hyprlock waybar wofi mako \
-    xdg-desktop-portal-hyprland archlinux-xdg-menu \
-    network-manager-applet brightnessctl blueman \
-    wl-clipboard cliphist grim slurp \
-    sddm qt5-wayland qt6-wayland kwallet dolphin ark
+pacman -S hyprland hyprlock \
+    waybar wofi mako \
+    xdg-desktop-portal-hyprland \
+    archlinux-xdg-menu \
+    network-manager-applet brightnessctl \
+    blueman wl-clipboard cliphist \
+    grim slurp sddm \
+    qt5-wayland qt6-wayland \
+    kwallet dolphin ark
 ```
 
 ##### Enable SDDM
@@ -355,9 +372,14 @@ systemctl enable sddm
 #### GNOME
 
 ```bash
-pacman -S gnome-shell nautilus evince file-roller gnome-keyring \
-    gnome-control-center gdm gnome-tweaks gnome-shell-extensions gnome-themes-extra \
-    gnome-shell-extension-appindicator papirus-icon-theme xdg-desktop-portal \
+pacman -S gdm gnome-shell nautilus \
+    evince file-roller gnome-keyring \
+    gnome-control-center gnome-tweaks \
+    gnome-themes-extra \
+    papirus-icon-theme \
+    gnome-shell-extensions \
+    gnome-shell-extension-appindicator \
+    xdg-desktop-portal \
     xdg-desktop-portal-gnome
 ```
 
