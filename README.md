@@ -36,7 +36,7 @@ mkfs.ext4 /dev/nvme0n1p2
 mount /dev/nvme0n1p2 /mnt
 ```
 
-### Setup pacman ParallelDownloads
+### Setup pacman
 
 ```bash
 nano /etc/pacman.conf
@@ -46,7 +46,7 @@ nano /etc/pacman.conf
 >
 > ```plaintext
 > Color
-> ParallelDownloads = 4
+> ParallelDownloads = 5
 > ```
 
 ### vconsole
@@ -54,7 +54,7 @@ nano /etc/pacman.conf
 In some cases, need to
 
 ```bash
-nano /etc/vconsole.conf
+nano /mnt/etc/vconsole.conf
 ```
 
 > write
@@ -79,7 +79,6 @@ pacstrap -K /mnt base base-devel \
 > genfstab -U /mnt >> /mnt/etc/fstab
 > ```
 
-
 > chroot
 >
 > ```bash
@@ -96,7 +95,7 @@ hwclock --systohc
 ### Localization setup
 
 ```bash
-vim /etc/locale.gen
+nvim /etc/locale.gen
 ```
 
 > uncomment
@@ -108,7 +107,7 @@ vim /etc/locale.gen
 
 ```bash
 locale-gen
-vim /etc/locale.conf
+nvim /etc/locale.conf
 ```
 
 > write
@@ -120,13 +119,13 @@ vim /etc/locale.conf
 ### Network configuration
 
 ```bash
-vim /etc/hostname
+nvim /etc/hostname
 ```
 
 > write
 >
 > ```plaintext
-> {HOSTNAME}
+> <HOSTNAME>
 > ```
 
 ```bash
@@ -148,7 +147,7 @@ passwd
 ### Setup grub
 
 ```bash
-vim /etc/default/grub
+nvim /etc/default/grub
 ```
 
 > change
@@ -175,6 +174,8 @@ shutdown now
 
 ## After installation
 
+Login as `root`
+
 ### Connect to internet
 
 ```bash
@@ -184,9 +185,9 @@ nmtui
 ### Setup user
 
 ```bash
-useradd -m -g users -G wheel -s /bin/zsh {USERNAME}
-passwd {USERNAME}
-EDITOR=vim visudo
+useradd -m -g users -G wheel -s /bin/zsh <USERNAME>
+passwd <USERNAME>
+EDITOR=nvim visudo
 ```
 
 > uncomment
@@ -199,12 +200,15 @@ EDITOR=vim visudo
 ### Setup pacman
 
 ```bash
-vim /etc/pacman.conf
+nvim /etc/pacman.conf
 ```
 
 > uncomment
 >
 > ```plaintext
+> Color
+> ParallelDownloads = 5
+> ...
 > [multilib]
 > Include = ...
 > ```
@@ -220,9 +224,9 @@ pacman -S bluez bluez-utils \
     gvfs gvfs-mtp gvfs-gphoto2 \
     pipewire wireplumber pipewire-audio \
     pipewire-alsa pipewire-pulse pipewire-jack \
-    nvidia nvidia-utils nvidia-prime nvidia-settings \
+    nvidia-dkms nvidia-utils nvidia-prime nvidia-settings \
     ttf-jetbrains-mono noto-fonts noto-fonts-cjk \
-    noto-fonts-emoji noto-fonts-extra oft-font-awesome \
+    noto-fonts-emoji noto-fonts-extra otf-font-awesome \
     alacritty git eza bat tmux htop tree unzip unrar ripgrep openssh \
     systemd-resolvconf wireguard-tools
 ```
@@ -230,7 +234,7 @@ pacman -S bluez bluez-utils \
 ### Enable zram
 
 ```bash
-vim /etc/systemd/zram-generator.conf
+nvim /etc/systemd/zram-generator.conf
 ```
 
 > write
@@ -268,7 +272,7 @@ mkinitcpio -P
 #### nvidia
 
 ```bash
-vim /etc/default/grub
+nvim /etc/default/grub
 ```
 
 > write
@@ -282,7 +286,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 ```bash
-vim /etc/mkinitcpio.conf
+nvim /etc/mkinitcpio.conf
 ```
 
 > write
@@ -297,7 +301,7 @@ mkinitcpio -P
 ```
 
 ```bash
-vim /etc/pacman.d/hooks/nvidia.hook
+nvim /etc/pacman.d/hooks/nvidia.hook
 ```
 
 > write
@@ -322,7 +326,17 @@ vim /etc/pacman.d/hooks/nvidia.hook
 systemctl reboot
 ```
 
-### Hyprland
+#### yay
+
+```bash
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+```
+
+### Desktop Environment
+
+#### Hyprland
 
 ```bash
 pacman -S hyprland hyprlock waybar wofi mako \
@@ -332,13 +346,13 @@ pacman -S hyprland hyprlock waybar wofi mako \
     sddm qt5-wayland qt6-wayland kwallet dolphin ark
 ```
 
-#### Enable SDDM
+##### Enable SDDM
 
 ```bash
 systemctl enable sddm
 ```
 
-### GNOME
+#### GNOME
 
 ```bash
 pacman -S gnome-shell nautilus evince file-roller gnome-keyring \
@@ -347,7 +361,7 @@ pacman -S gnome-shell nautilus evince file-roller gnome-keyring \
     xdg-desktop-portal-gnome
 ```
 
-#### Enable GDM
+##### Enable GDM
 
 ```bash
 systemctl enable gdm
