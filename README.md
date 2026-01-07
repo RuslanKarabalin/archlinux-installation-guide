@@ -198,9 +198,9 @@ EDITOR=nvim visudo
 > uncomment
 >
 > ```plaintext
-> %wheel ALL=...
+> %wheel ALL=(ALL:ALL) ALL
 > ...
-> %sudo ALL=...
+> %sudo ALL=(ALL:ALL) ALL
 > ```
 
 ### Setup pacman
@@ -277,7 +277,7 @@ systemctl enable bluetooth
 #### fstrim
 
 ```bash
-systemctl enable fstrim
+systemctl enable fstrim.timer
 fstrim -v /
 mkinitcpio -P
 ```
