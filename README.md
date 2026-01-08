@@ -352,15 +352,27 @@ makepkg -si
 #### Hyprland
 
 ```bash
-pacman -S hyprland hyprlock \
+pacman -S hyprland hyprlock hypridle \
     waybar wofi mako \
     xdg-desktop-portal-hyprland \
-    archlinux-xdg-menu \
-    network-manager-applet brightnessctl \
+    polkit-kde-agent \
+    archlinux-xdg-menu xdg-user-dirs \
+    network-manager-applet \
+    brightnessctl \
     blueman wl-clipboard cliphist \
-    grim slurp sddm \
+    grim slurp swappy \
+    hyprpaper \
+    pavucontrol playerctl \
+    imv mpv \
+    zathura zathura-pdf-mupdf \
+    firefox \
+    thunar thunar-volman \
+    thunar-archive-plugin \
+    sddm \
     qt5-wayland qt6-wayland \
-    kwallet dolphin ark
+    kwallet dolphin ark \
+    gtk3 gtk4 \
+    papirus-icon-theme
 ```
 
 ##### Enable SDDM
