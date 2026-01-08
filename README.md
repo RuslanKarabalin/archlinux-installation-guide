@@ -234,9 +234,11 @@ pacman -S bluez bluez-utils \
     pipewire-pulse pipewire-jack \
     nvidia-dkms nvidia-utils \
     nvidia-prime nvidia-settings \
-    ttf-jetbrains-mono noto-fonts \
-    noto-fonts-cjk noto-fonts-emoji \
-    noto-fonts-extra otf-font-awesome \
+    ttf-jetbrains-mono \
+    noto-fonts noto-fonts-cjk \
+    noto-fonts-emoji \
+    noto-fonts-extra \
+    otf-font-awesome \
     alacritty tmux git eza \
     bat htop tree ripgrep \
     unzip unrar openssh \
@@ -352,7 +354,8 @@ makepkg -si
 #### Hyprland
 
 ```bash
-pacman -S hyprland hyprlock hypridle \
+pacman -S hyprland \
+    hyprlock hypridle \
     waybar wofi mako \
     xdg-desktop-portal-hyprland \
     polkit-kde-agent \
@@ -384,9 +387,11 @@ systemctl enable sddm
 #### GNOME
 
 ```bash
-pacman -S gdm gnome-shell nautilus \
-    evince file-roller gnome-keyring \
-    gnome-control-center gnome-tweaks \
+pacman -S gdm gnome-shell \
+    nautilus evince \
+    file-roller gnome-keyring \
+    gnome-control-center \
+    gnome-tweaks \
     gnome-themes-extra \
     papirus-icon-theme \
     gnome-shell-extensions \
