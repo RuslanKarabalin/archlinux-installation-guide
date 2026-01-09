@@ -34,9 +34,11 @@ cfdisk -z /dev/nvme0n1
 mkfs.fat -F 32 -n GRUB /dev/nvme0n1p1
 mkfs.ext4 /dev/nvme0n1p2
 mount /dev/nvme0n1p2 /mnt
+mkdir -p /mnt/boot/efi
+mount /dev/nvme0n1p1 /mnt/boot/efi
 ```
 
-### Setup pacman
+### Setup pacman on live USB
 
 ```bash
 nano /etc/pacman.conf
@@ -162,9 +164,6 @@ nvim /etc/default/grub
 > ```
 
 ```bash
-mkdir /boot/efi
-mount /dev/nvme0n1p1 /boot/efi
-lsblk
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
@@ -203,7 +202,7 @@ EDITOR=nvim visudo
 > %sudo ALL=(ALL:ALL) ALL
 > ```
 
-### Setup pacman
+### Setup pacman in installed system
 
 ```bash
 nvim /etc/pacman.conf
@@ -232,8 +231,6 @@ pacman -S bluez bluez-utils \
     pipewire wireplumber \
     pipewire-audio pipewire-alsa \
     pipewire-pulse pipewire-jack \
-    nvidia-dkms nvidia-utils \
-    nvidia-prime nvidia-settings \
     ttf-jetbrains-mono \
     noto-fonts noto-fonts-cjk \
     noto-fonts-emoji \
@@ -281,7 +278,6 @@ systemctl enable bluetooth
 ```bash
 systemctl enable fstrim.timer
 fstrim -v /
-mkinitcpio -P
 ```
 
 ### Install yay for AUR
@@ -351,7 +347,36 @@ systemctl enable gdm
 
 ## Extra
 
+### docker
+
+```bash
+pacman -S docker \
+    docker-compose \
+    lazydocker
+```
+
+```bash
+systemctl enable docker.socket
+```
+
+```bash
+groupadd docker
+usermod -aG docker <USERNAME>
+```
+
+```bash
+newgrp docker
+docker run hello-world
+```
+
 ### nvidia
+
+```bash
+pacman -S nvidia-dkms \
+    nvidia-utils \
+    nvidia-prime \
+    nvidia-settings
+```
 
 ```bash
 nvim /etc/default/grub
@@ -405,5 +430,5 @@ nvim /etc/pacman.d/hooks/nvidia.hook
 > ```
 
 ```bash
-systemctl reboot
+reboot
 ```
