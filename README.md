@@ -284,64 +284,7 @@ fstrim -v /
 mkinitcpio -P
 ```
 
-#### nvidia
-
-```bash
-nvim /etc/default/grub
-```
-
-> write
->
-> ```plaintext
-> GRUB_CMDLINE_LINUX_DEFAULT="... nvidia-drm.modeset=1 nvidia-drm.fbdev=1"
-> ```
-
-```bash
-grub-mkconfig -o /boot/grub/grub.cfg
-```
-
-```bash
-nvim /etc/mkinitcpio.conf
-```
-
-> write
->
-> ```plaintext
-> MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)
-> remove kms from HOOKS=()
-> ```
-
-```bash
-mkinitcpio -P
-```
-
-```bash
-nvim /etc/pacman.d/hooks/nvidia.hook
-```
-
-> write
->
-> ```plaintext
-> [Trigger]
-> Operation=Install
-> Operation=Upgrade
-> Operation=Remove
-> Type=Package
-> Target=nvidia
-> Target=linux
-> 
-> [Action]
-> Depends=mkinitcpio
-> When=PostTransaction
-> NeedsTargets
-> Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
-> ```
-
-```bash
-systemctl reboot
-```
-
-#### yay
+### Install yay for AUR
 
 ```bash
 git clone https://aur.archlinux.org/yay.git
@@ -404,4 +347,63 @@ pacman -S gdm gnome-shell \
 
 ```bash
 systemctl enable gdm
+```
+
+## Extra
+
+### nvidia
+
+```bash
+nvim /etc/default/grub
+```
+
+> write
+>
+> ```plaintext
+> GRUB_CMDLINE_LINUX_DEFAULT="... nvidia-drm.modeset=1 nvidia-drm.fbdev=1"
+> ```
+
+```bash
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+```bash
+nvim /etc/mkinitcpio.conf
+```
+
+> write
+>
+> ```plaintext
+> MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)
+> remove kms from HOOKS=()
+> ```
+
+```bash
+mkinitcpio -P
+```
+
+```bash
+nvim /etc/pacman.d/hooks/nvidia.hook
+```
+
+> write
+>
+> ```plaintext
+> [Trigger]
+> Operation=Install
+> Operation=Upgrade
+> Operation=Remove
+> Type=Package
+> Target=nvidia
+> Target=linux
+> 
+> [Action]
+> Depends=mkinitcpio
+> When=PostTransaction
+> NeedsTargets
+> Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
+> ```
+
+```bash
+systemctl reboot
 ```
