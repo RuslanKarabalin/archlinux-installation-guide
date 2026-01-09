@@ -96,6 +96,8 @@ pacstrap -K /mnt base \
 ```bash
 ln -sf /usr/share/zoneinfo/<REGION>/<CITY> /etc/localtime
 hwclock --systohc
+timedatectl set-ntp true
+timedatectl status
 ```
 
 ### Localization setup
@@ -259,11 +261,17 @@ nvim /etc/systemd/zram-generator.conf
 
 ```bash
 systemctl daemon-reload
-systemctl start systemd-zram-setup@zram0.service
+systemctl enable --now systemd-zram-setup@zram0.service
 zramctl
 ```
 
 ### Enable base services
+
+#### resolvconf
+
+```bash
+systemctl enable systemd-resolved
+```
 
 #### bluetooth
 
@@ -276,14 +284,6 @@ systemctl enable bluetooth
 ```bash
 systemctl enable fstrim.timer
 fstrim -v /
-```
-
-### Install yay for AUR
-
-```bash
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
 ```
 
 ### Desktop Environment
@@ -345,21 +345,28 @@ systemctl enable gdm
 
 ## Extra
 
+### yay
+
+```bash
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+```
+
 ### docker
 
 ```bash
-pacman -S docker \
+sudo pacman -S docker \
     docker-compose \
     lazydocker
 ```
 
 ```bash
-systemctl enable docker.socket
+sudo systemctl enable docker.socket
 ```
 
 ```bash
-groupadd docker
-usermod -aG docker <USERNAME>
+sudo usermod -aG docker <USERNAME>
 ```
 
 ```bash
@@ -370,14 +377,14 @@ docker run hello-world
 ### nvidia
 
 ```bash
-pacman -S nvidia-dkms \
+sudo pacman -S nvidia-dkms \
     nvidia-utils \
     nvidia-prime \
     nvidia-settings
 ```
 
 ```bash
-nvim /etc/default/grub
+sudo nvim /etc/default/grub
 ```
 
 > write
@@ -387,11 +394,11 @@ nvim /etc/default/grub
 > ```
 
 ```bash
-grub-mkconfig -o /boot/grub/grub.cfg
+sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 ```bash
-nvim /etc/mkinitcpio.conf
+sudo nvim /etc/mkinitcpio.conf
 ```
 
 > write
@@ -402,12 +409,12 @@ nvim /etc/mkinitcpio.conf
 > ```
 
 ```bash
-mkinitcpio -P
+sudo mkinitcpio -P
 ```
 
 ```bash
-mkdir -p /etc/pacman.d/hooks/
-nvim /etc/pacman.d/hooks/nvidia.hook
+sudo mkdir -p /etc/pacman.d/hooks/
+sudo nvim /etc/pacman.d/hooks/nvidia.hook
 ```
 
 > write
@@ -429,5 +436,5 @@ nvim /etc/pacman.d/hooks/nvidia.hook
 > ```
 
 ```bash
-reboot
+sudo reboot now
 ```
