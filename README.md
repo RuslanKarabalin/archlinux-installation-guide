@@ -198,8 +198,6 @@ EDITOR=nvim visudo
 >
 > ```plaintext
 > %wheel ALL=(ALL:ALL) ALL
-> ...
-> %sudo ALL=(ALL:ALL) ALL
 > ```
 
 ### Setup pacman in installed system
@@ -408,6 +406,7 @@ mkinitcpio -P
 ```
 
 ```bash
+mkdir -p /etc/pacman.d/hooks/
 nvim /etc/pacman.d/hooks/nvidia.hook
 ```
 
