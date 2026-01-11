@@ -31,7 +31,7 @@ cfdisk -z /dev/nvme0n1
 > ```
 
 ```bash
-mkfs.fat -F 32 -n GRUB /dev/nvme0n1p1
+mkfs.fat -F 32 -n BOOT /dev/nvme0n1p1
 mkfs.ext4 /dev/nvme0n1p2
 mount /dev/nvme0n1p2 /mnt
 mkdir -p /mnt/boot/efi
@@ -236,8 +236,10 @@ pacman -S bluez bluez-utils \
     noto-fonts-emoji \
     noto-fonts-extra \
     otf-font-awesome \
-    alacritty tmux git eza \
-    bat htop tree ripgrep \
+    alacritty tmux \
+    git eza bat \
+    inxi htop tree \
+    ripgrep fastfetch \
     unzip unrar openssh \
     systemd-resolvconf \
     wireguard-tools
@@ -305,7 +307,6 @@ pacman -S hyprland \
     pavucontrol playerctl \
     imv mpv \
     zathura zathura-pdf-mupdf \
-    firefox \
     thunar thunar-volman \
     thunar-archive-plugin \
     sddm \
@@ -372,6 +373,21 @@ sudo usermod -aG docker <USERNAME>
 ```bash
 newgrp docker
 docker run hello-world
+```
+
+### some gui apps
+
+```bash
+yay -S gimp \
+    firefox \
+    neovim-git \
+    obs-studio \
+    qbittorrent \
+    google-chrome \
+    telegram-desktop \
+    vlc vlc-plugin-ffmpeg \
+    visual-studio-code-bin \
+    v4l2loopback-dkms v4l2loopback-utils
 ```
 
 ### nvidia
