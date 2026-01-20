@@ -344,6 +344,28 @@ pacman -S gdm gnome-shell \
 systemctl enable gdm
 ```
 
+#### KDE Plasma
+
+```bash
+pacman -S plasma-desktop
+    plasma-x11-session \
+    sddm dolphin ark \
+    spectacle \
+    plasma-pa plasma-nm \
+    powerdevil \
+    kde-gtk-config \
+    breeze-gtk \
+    xdg-desktop-portal \
+    xdg-desktop-portal-kde \
+    papirus-icon-theme
+```
+
+##### Enable SDDM
+
+```bash
+systemctl enable sddm
+```
+
 ## Extra
 
 ### yay
