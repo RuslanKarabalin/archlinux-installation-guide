@@ -351,6 +351,7 @@ pacman -S plasma-desktop
     plasma-x11-session \
     sddm dolphin ark \
     spectacle \
+    bluedevil \
     plasma-pa plasma-nm \
     powerdevil \
     kde-gtk-config \
