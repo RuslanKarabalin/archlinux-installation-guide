@@ -382,6 +382,7 @@ makepkg -si
 ```bash
 sudo pacman -S docker \
     docker-compose \
+    docker-buildx \
     lazydocker
 ```
 
